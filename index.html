@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Above Black">
     <title>Above Black • Line Training</title>
+    <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -32,14 +37,14 @@
                 </div>
                 <div>
                     <h1 class="font-display text-4xl font-semibold tracking-tighter">ABOVE BLACK</h1>
-                    <p class="text-[10px] text-zinc-500 -mt-1.5 tracking-[4px] font-medium">LINE TRAINING SYSTEM v0.9.2</p>
+                    <p class="text-[10px] text-zinc-500 -mt-1.5 tracking-[4px] font-medium">LINE TRAINING SYSTEM v0.9.3 • PWA</p>
                 </div>
             </div>
             <div class="flex items-center gap-x-3">
-                <div class="hidden md:flex items-center gap-x-2 px-4 py-1.5 bg-zinc-900 rounded-3xl text-xs">
-                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span class="text-emerald-400 font-medium">LOCAL • OFFLINE • SOVEREIGN</span>
-                </div>
+                <button id="install-btn" onclick="installPWA()" class="hidden px-4 py-2 text-sm bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-medium rounded-3xl flex items-center gap-x-2 transition-all">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Install App</span>
+                </button>
                 <button onclick="showCommandPalette()" class="px-4 py-2.5 text-sm bg-zinc-900 hover:bg-zinc-800 rounded-3xl flex items-center gap-x-2 transition-all border border-zinc-700">
                     <i class="fa-solid fa-terminal text-xs"></i>
                     <span class="hidden sm:inline font-mono text-xs">CMD+K</span>
@@ -330,7 +335,7 @@
     </div>
 
     <footer class="border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
-        ABOVE BLACK v0.9.2 • Local-first • Zero telemetry • Palantir-grade precision for personal sovereignty
+        ABOVE BLACK v0.9.3 • PWA Enabled • Local-first • Zero telemetry
     </footer>
 
     <!-- Settings Modal -->
@@ -356,7 +361,41 @@
     </div>
 
     <script>
-        let audioContext, oscillator, gainNode, isPlaying = false, currentWaveform = 'sine', visualizerInterval, trendChart;
+        let audioContext, oscillator, gainNode, isPlaying = false, currentWaveform = 'sine', visualizerInterval, trendChart, deferredPrompt;
+
+        // PWA Install Prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-btn').classList.remove('hidden');
+            document.getElementById('install-btn').classList.add('flex');
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('[PWA] User accepted install');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('install-btn').classList.add('hidden');
+                });
+            }
+        }
+
+        // Register Service Worker for offline support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('[PWA] Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('[PWA] Service Worker registration failed:', error);
+                    });
+            });
+        }
 
         function initTailwind() {
             // Tailwind already loaded via CDN
@@ -603,7 +642,6 @@
             document.getElementById('total-minutes').innerText = totalMin.toLocaleString();
             document.getElementById('hero-resonance').innerText = avgRes;
 
-            // Insights cards
             const insights = [
                 { label: 'Avg Coherence', value: avgRes + '%', icon: 'fa-chart-line' },
                 { label: 'Best Line', value: 'Line 03', icon: 'fa-tachometer-alt' },
@@ -617,7 +655,6 @@
                 list.appendChild(el);
             });
 
-            // Trend Chart
             if (chartInstance) chartInstance.destroy();
             const ctx = document.getElementById('trend-chart');
             const labels = progress.slice(0, 14).reverse().map((_, i) => `S${i+1}`);
@@ -757,18 +794,15 @@
             initTailwind();
             initWaveButtons();
 
-            // Defaults
             const defaultFreq = localStorage.getItem('defaultFreq') || '432';
             document.getElementById('base-freq').value = defaultFreq;
             document.getElementById('freq-display').innerText = parseFloat(defaultFreq).toFixed(2);
             document.getElementById('base-freq-value').innerText = parseFloat(defaultFreq).toFixed(2);
 
-            // Listeners
             document.getElementById('binaural-toggle').addEventListener('change', function() {
                 document.getElementById('binaural-controls').classList.toggle('hidden', !this.checked);
             });
 
-            // Keyboard
             document.addEventListener('keydown', function(e) {
                 if ((e.key === ' ' || e.key.toLowerCase() === 'k') && !e.target.matches('input')) {
                     e.preventDefault(); togglePlayback();
@@ -778,20 +812,15 @@
                 if (e.key === 'Escape' && isPlaying) stopPlayback();
             });
 
-            // Initial resonance
             setTimeout(() => {
                 document.getElementById('res-primary').value = defaultFreq;
                 updateResonance();
                 document.getElementById('hero-resonance').innerText = '87';
             }, 120);
 
-            // Load analytics
             updateAnalytics();
 
-            // Welcome
-            setTimeout(() => {
-                console.log('%c[Above Black v0.9.2] Palantir-grade local frequency system ready. All data sovereign.', 'color:#3f3f46');
-            }, 1200);
+            console.log('%c[Above Black v0.9.3] PWA + Service Worker enabled. Fully offline capable after first visit.', 'color:#3f3f46');
         }
 
         window.onload = initEverything;
