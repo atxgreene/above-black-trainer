@@ -27,6 +27,12 @@
         .metric-value { font-variant-numeric: tabular-nums; }
         .gateway-card { transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); }
         .gateway-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(16 185 129 / 0.1), 0 8px 10px -6px rgb(16 185 129 / 0.1); }
+        .guided-text { animation: fadeInOut 4s ease-in-out forwards; }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            20%, 80% { opacity: 1; }
+        }
+        .energy-body { filter: blur(1px); }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200">
@@ -39,7 +45,7 @@
                 </div>
                 <div>
                     <h1 class="font-display text-4xl font-semibold tracking-tighter">ABOVE BLACK</h1>
-                    <p class="text-[10px] text-zinc-500 -mt-1.5 tracking-[4px] font-medium">LINE TRAINING SYSTEM v0.9.4 • GATEWAY</p>
+                    <p class="text-[10px] text-zinc-500 -mt-1.5 tracking-[4px] font-medium">LINE TRAINING SYSTEM v0.9.5 • GATEWAY + HEMI-SYNC</p>
                 </div>
             </div>
             <div class="flex items-center gap-x-3">
@@ -64,7 +70,7 @@
             <div>
                 <div class="inline-flex items-center gap-x-2 px-5 py-1.5 bg-zinc-900 rounded-3xl mb-4 border border-zinc-800">
                     <span class="text-emerald-400">✦</span>
-                    <span class="text-sm font-medium tracking-wide">HUMAN FREQUENCY RESONANCE + GATEWAY PROTOCOLS</span>
+                    <span class="text-sm font-medium tracking-wide">GATEWAY EXPERIENCE + HEMI-SYNC PROTOCOLS</span>
                 </div>
                 <h2 class="font-display text-6xl md:text-7xl font-semibold tracking-tighter leading-none mb-3">Tune the Line.<br>Transcend the Black.</h2>
                 <p class="max-w-lg text-xl text-zinc-400">Precision tools for nervous system regulation, cognitive enhancement, and expanded consciousness.</p>
@@ -94,7 +100,7 @@
                     <div class="flex justify-between items-start mb-8">
                         <div>
                             <h3 class="text-3xl font-semibold tracking-tight">Frequency Generator</h3>
-                            <p class="text-zinc-400">Real-time Web Audio synthesis engine</p>
+                            <p class="text-zinc-400">Real-time Web Audio synthesis engine • Multi-band Hemi-Sync</p>
                         </div>
                         <div class="text-right">
                             <div class="text-5xl font-mono font-semibold frequency-display" id="freq-display">432.00</div>
@@ -103,7 +109,6 @@
                     </div>
 
                     <div class="space-y-7">
-                        <!-- Quick Presets -->
                         <div>
                             <div class="text-sm font-medium mb-2.5 text-emerald-400">QUICK PRESETS</div>
                             <div class="flex flex-wrap gap-2">
@@ -126,33 +131,15 @@
                             </div>
                         </div>
 
-                        <div>
-                            <div class="text-sm font-medium mb-2.5">Waveform</div>
-                            <div class="grid grid-cols-4 gap-2">
-                                <button onclick="setWaveform('sine')" class="wave-btn active px-4 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm flex items-center justify-center gap-x-2" data-wave="sine"><i class="fa-solid fa-waveform-lines"></i> <span>Sine</span></button>
-                                <button onclick="setWaveform('square')" class="wave-btn px-4 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm flex items-center justify-center gap-x-2" data-wave="square"><i class="fa-solid fa-square"></i> <span>Square</span></button>
-                                <button onclick="setWaveform('sawtooth')" class="wave-btn px-4 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm flex items-center justify-center gap-x-2" data-wave="sawtooth"><i class="fa-solid fa-chart-line"></i> <span>Saw</span></button>
-                                <button onclick="setWaveform('triangle')" class="wave-btn px-4 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm flex items-center justify-center gap-x-2" data-wave="triangle"><i class="fa-solid fa-play"></i> <span>Tri</span></button>
-                            </div>
-                        </div>
-
                         <div class="flex items-center justify-between bg-zinc-900/50 rounded-2xl p-4">
                             <div>
-                                <div class="font-medium text-sm">Binaural Beats</div>
-                                <div class="text-xs text-zinc-500">Left / Right frequency difference</div>
+                                <div class="font-medium text-sm">Multi-Band Hemi-Sync</div>
+                                <div class="text-xs text-zinc-500">Binaural + Isochronic pulses</div>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="binaural-toggle" class="sr-only peer" onchange="updateFrequency(); document.getElementById('binaural-controls').classList.toggle('hidden', !this.checked)">
+                                <input type="checkbox" id="hemisync-toggle" class="sr-only peer" checked onchange="updateFrequency()">
                                 <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                             </label>
-                        </div>
-
-                        <div id="binaural-controls" class="hidden bg-zinc-900/50 rounded-2xl p-4">
-                            <div class="flex justify-between text-sm mb-2">
-                                <span>Beat Frequency</span>
-                                <span id="beat-value" class="font-mono text-emerald-400">6.00 Hz</span>
-                            </div>
-                            <input type="range" id="beat-freq" min="0.5" max="40" step="0.1" value="6" class="w-full accent-emerald-500" oninput="updateFrequency()">
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
@@ -184,17 +171,18 @@
                     </div>
                 </div>
 
-                <!-- Visualizer -->
+                <!-- Visualizer + Energy Body -->
                 <div class="lg:col-span-2 glass rounded-3xl p-8 border border-zinc-800 flex flex-col palantir-shadow">
                     <div class="flex justify-between items-center mb-6">
                         <div>
-                            <div class="font-semibold">Live Harmonic Field</div>
-                            <div class="text-xs text-zinc-500">Real-time spectral analysis</div>
+                            <div class="font-semibold">Live Field</div>
+                            <div class="text-xs text-zinc-500">Spectral + Energy Body</div>
                         </div>
-                        <div class="px-3 py-1 text-xs bg-emerald-500/10 text-emerald-400 rounded-2xl">LIVE</div>
+                        <button onclick="toggleEnergyBody()" class="px-3 py-1 text-xs bg-emerald-500/10 text-emerald-400 rounded-2xl hover:bg-emerald-500/20">Energy Body</button>
                     </div>
                     <div class="flex-1 flex items-center justify-center relative">
                         <canvas id="visualizer" width="320" height="320" class="rounded-full"></canvas>
+                        <canvas id="energy-body" width="320" height="320" class="rounded-full absolute energy-body hidden"></canvas>
                     </div>
                     <div class="text-center text-xs text-zinc-500 mt-auto pt-4">Harmonic coherence • 29.4k samples/sec</div>
                 </div>
@@ -308,14 +296,14 @@
             </div>
         </div>
 
-        <!-- GATEWAY PROTOCOLS TAB (NEW) -->
+        <!-- GATEWAY PROTOCOLS TAB -->
         <div id="content-3" class="section hidden">
             <div class="mb-8">
                 <div class="flex items-center gap-x-3 mb-2">
                     <i class="fa-solid fa-rocket text-emerald-400 text-2xl"></i>
                     <h3 class="text-4xl font-semibold tracking-tight">Gateway Protocols</h3>
                 </div>
-                <p class="text-zinc-400 max-w-2xl">Hemi-Sync inspired consciousness expansion lines based on The Monroe Institute’s Gateway Experience and advanced astral/lucid states. Use with intention.</p>
+                <p class="text-zinc-400 max-w-2xl">Hemi-Sync inspired consciousness expansion lines based on The Monroe Institute’s Gateway Experience. Use with intention and respect.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -343,6 +331,32 @@
                     </div>
                     <div class="text-sm text-zinc-400 mb-4">Gateway’s signature state of non-physical awareness. Enhanced perception and energy body activation.</div>
                     <div class="text-xs text-emerald-400">~22 min • 6–8 Hz theta + harmonic layers</div>
+                </div>
+
+                <!-- Focus 15 (NEW) -->
+                <div onclick="startGatewayProtocol(6)" class="gateway-card glass rounded-3xl p-8 border border-cyan-500/30 hover:border-cyan-500 cursor-pointer">
+                    <div class="flex items-center gap-x-4 mb-4">
+                        <div class="text-cyan-400"><i class="fa-solid fa-clock text-3xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">FOCUS 15</div>
+                            <div class="text-cyan-400 text-sm">No Time • No Space</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Advanced Gateway state. Complete escape from linear time and physical space. Pure consciousness exploration.</div>
+                    <div class="text-xs text-cyan-400">~25 min • Multi-band Hemi-Sync (Focus 10–12 stack)</div>
+                </div>
+
+                <!-- Focus 21 (NEW) -->
+                <div onclick="startGatewayProtocol(7)" class="gateway-card glass rounded-3xl p-8 border border-violet-500/30 hover:border-violet-500 cursor-pointer">
+                    <div class="flex items-center gap-x-4 mb-4">
+                        <div class="text-violet-400"><i class="fa-solid fa-globe text-3xl"></i></div>
+                        <div>
+                            <div class="font-semibold text-2xl">FOCUS 21</div>
+                            <div class="text-violet-400 text-sm">Other Energy Systems</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Gateway’s most advanced state. Contact with non-physical entities and other energy systems beyond physical reality.</div>
+                    <div class="text-xs text-violet-400">~30 min • Full Hemi-Sync + guided energy body activation</div>
                 </div>
 
                 <!-- Astral Exit -->
@@ -383,11 +397,19 @@
                     <div class="text-sm text-zinc-400 mb-4">Advanced integration of multiple Focus levels. Combines Focus 10–21 elements for deep non-physical exploration.</div>
                     <div class="text-xs text-rose-400">~28 min • Multi-band Hemi-Sync stack</div>
                 </div>
+            </div>
 
-                <div class="gateway-card glass rounded-3xl p-8 border border-zinc-700 flex flex-col justify-center items-center text-center">
-                    <div class="text-zinc-400 mb-3"><i class="fa-solid fa-info-circle text-2xl"></i></div>
-                    <div class="font-medium mb-1">Coming Soon</div>
-                    <div class="text-xs text-zinc-500 max-w-[180px]">Focus 15 (No Time), Focus 21 (Other Energy Systems), and full Gateway Tape simulations</div>
+            <!-- Resources Section -->
+            <div class="mt-12 glass rounded-3xl p-8 border border-zinc-700">
+                <div class="flex items-center gap-x-3 mb-4">
+                    <i class="fa-solid fa-book text-emerald-400"></i>
+                    <h4 class="font-semibold text-xl">Resources & Origins</h4>
+                </div>
+                <div class="text-sm text-zinc-400 space-y-2">
+                    <div>• <a href="https://archive.org/details/CIA-RDP96-00788R001700210016-5" target="_blank" class="text-emerald-400 hover:underline">CIA Analysis of the Gateway Process (1983)</a> — Declassified document</div>
+                    <div>• <a href="https://archive.org/details/the-gateway-experience-manual" target="_blank" class="text-emerald-400 hover:underline">The Gateway Experience Manual (Wave I — Discovery)</a> — Full Monroe Institute manual</div>
+                    <div>• <a href="https://archive.org/details/monroe-institute-collections" target="_blank" class="text-emerald-400 hover:underline">Monroe Institute Archives</a> — Original Hemi-Sync materials</div>
+                    <div class="pt-2 text-xs text-zinc-500">These documents form the foundation of modern consciousness exploration technology.</div>
                 </div>
             </div>
         </div>
@@ -431,7 +453,7 @@
     </div>
 
     <footer class="border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
-        ABOVE BLACK v0.9.4 • Gateway Protocols + PWA • Local-first • Zero telemetry
+        ABOVE BLACK v0.9.5 • Gateway + Hemi-Sync + Energy Body • Local-first • Zero telemetry
     </footer>
 
     <!-- Settings Modal -->
@@ -457,7 +479,7 @@
     </div>
 
     <script>
-        let audioContext, oscillator, gainNode, isPlaying = false, currentWaveform = 'sine', visualizerInterval, trendChart, deferredPrompt;
+        let audioContext, oscillator, gainNode, isPlaying = false, currentWaveform = 'sine', visualizerInterval, trendChart, deferredPrompt, energyBodyInterval, guidedInterval;
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -523,9 +545,10 @@
             stopPlayback(false);
 
             const baseFreq = parseFloat(document.getElementById('base-freq').value);
-            const isBinaural = document.getElementById('binaural-toggle').checked;
-            const beatFreq = parseFloat(document.getElementById('beat-freq').value) || 0;
+            const isBinaural = true;
+            const beatFreq = 6;
             const volume = parseInt(document.getElementById('volume').value) / 100;
+            const useHemiSync = document.getElementById('hemisync-toggle').checked;
 
             const leftOsc = audioContext.createOscillator();
             leftOsc.type = currentWaveform;
@@ -533,18 +556,30 @@
             const leftGain = audioContext.createGain();
             leftGain.gain.value = volume;
 
-            if (isBinaural && beatFreq > 0) {
-                const rightOsc = audioContext.createOscillator();
+            let rightOsc, isochronicOsc, merger;
+
+            if (useHemiSync) {
+                rightOsc = audioContext.createOscillator();
                 rightOsc.type = currentWaveform;
                 rightOsc.frequency.value = baseFreq + beatFreq;
                 const rightGain = audioContext.createGain();
                 rightGain.gain.value = volume;
-                const merger = audioContext.createChannelMerger(2);
+
+                isochronicOsc = audioContext.createOscillator();
+                isochronicOsc.type = 'sine';
+                isochronicOsc.frequency.value = 40;
+                const isochronicGain = audioContext.createGain();
+                isochronicGain.gain.value = volume * 0.6;
+
+                merger = audioContext.createChannelMerger(2);
                 leftOsc.connect(leftGain);
                 rightOsc.connect(rightGain);
+                isochronicOsc.connect(isochronicGain);
                 leftGain.connect(merger, 0, 0);
                 rightGain.connect(merger, 0, 1);
+                isochronicGain.connect(merger, 0, 0);
                 merger.connect(audioContext.destination);
+
                 oscillator = leftOsc;
                 gainNode = leftGain;
             } else {
@@ -555,11 +590,17 @@
             }
 
             leftOsc.start();
-            if (typeof rightOsc !== 'undefined') rightOsc.start();
+            if (rightOsc) rightOsc.start();
+            if (isochronicOsc) isochronicOsc.start();
+
             isPlaying = true;
             document.getElementById('play-icon').classList.replace('fa-play', 'fa-pause');
             document.getElementById('play-text').innerText = 'PAUSE RESONANCE';
             startVisualizer();
+
+            if (useHemiSync) {
+                showGuidedText();
+            }
         }
 
         function stopPlayback(resetUI = true) {
@@ -567,12 +608,14 @@
             if (gainNode) gainNode = null;
             isPlaying = false;
             if (visualizerInterval) { clearInterval(visualizerInterval); visualizerInterval = null; }
+            if (guidedInterval) { clearInterval(guidedInterval); guidedInterval = null; }
             if (resetUI) {
                 const canvas = document.getElementById('visualizer');
                 const ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 document.getElementById('play-icon').classList.replace('fa-pause', 'fa-play');
                 document.getElementById('play-text').innerText = 'BEGIN RESONANCE';
+                document.getElementById('energy-body').classList.add('hidden');
             }
         }
 
@@ -616,6 +659,76 @@
                     ctx.fill();
                 }
             }, 42);
+        }
+
+        function toggleEnergyBody() {
+            const energyCanvas = document.getElementById('energy-body');
+            energyCanvas.classList.toggle('hidden');
+            if (!energyCanvas.classList.contains('hidden')) {
+                startEnergyBodyVisualizer(energyCanvas);
+            } else {
+                if (energyBodyInterval) clearInterval(energyBodyInterval);
+            }
+        }
+
+        function startEnergyBodyVisualizer(canvas) {
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            if (energyBodyInterval) clearInterval(energyBodyInterval);
+            energyBodyInterval = setInterval(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const time = Date.now() / 300;
+                const base = parseFloat(document.getElementById('base-freq').value) || 432;
+                const pulse = Math.sin(time) * 0.3 + 0.7;
+                ctx.strokeStyle = `rgba(16, 185, 129, ${pulse * 0.6})`;
+                ctx.lineWidth = 3;
+                for (let i = 0; i < 6; i++) {
+                    ctx.beginPath();
+                    ctx.ellipse(centerX, centerY, 80 + i * 18, 110 + i * 12, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+                ctx.fillStyle = `rgba(52, 211, 153, ${pulse * 0.4})`;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 25, 0, Math.PI * 2);
+                ctx.fill();
+            }, 50);
+        }
+
+        let guidedTexts = [];
+        function showGuidedText() {
+            if (guidedInterval) clearInterval(guidedInterval);
+            const container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.bottom = '120px';
+            container.style.left = '50%';
+            container.style.transform = 'translateX(-50%)';
+            container.style.zIndex = '9999';
+            container.style.pointerEvents = 'none';
+            document.body.appendChild(container);
+
+            guidedTexts = [
+                "Breathe deeply... allow the body to relax...",
+                "Feel the vibration moving through your energy body...",
+                "Release all tension... you are safe...",
+                "Expand your awareness beyond the physical...",
+                "You are more than your body..."
+            ];
+            let index = 0;
+
+            guidedInterval = setInterval(() => {
+                if (index >= guidedTexts.length || !isPlaying) {
+                    clearInterval(guidedInterval);
+                    container.remove();
+                    return;
+                }
+                const textEl = document.createElement('div');
+                textEl.className = 'guided-text text-center text-emerald-300 text-lg font-light tracking-wide px-8';
+                textEl.innerText = guidedTexts[index];
+                container.innerHTML = '';
+                container.appendChild(textEl);
+                index++;
+            }, 4800);
         }
 
         function updateResonance() {
@@ -671,6 +784,8 @@
             const protocols = {
                 1: { name: "Focus 10", duration: 18, freq: 4, desc: "Mind Awake / Body Asleep — Classic Gateway entry state." },
                 2: { name: "Focus 12", duration: 22, freq: 6, desc: "Expanded Awareness — Gateway signature state." },
+                6: { name: "Focus 15", duration: 25, freq: 4, desc: "No Time • No Space — Complete escape from linear time." },
+                7: { name: "Focus 21", duration: 30, freq: 963, desc: "Other Energy Systems — Contact with non-physical realms." },
                 3: { name: "Astral Exit", duration: 25, freq: 4, desc: "Conscious out-of-body preparation." },
                 4: { name: "Lucid Bridge", duration: 20, freq: 6, desc: "Dream awareness & lucid induction." },
                 5: { name: "Monroe Integration", duration: 28, freq: 963, desc: "Full Hemi-Sync spectrum integration." }
@@ -782,7 +897,7 @@
         function showCommandPalette() {
             const palette = document.createElement('div');
             palette.className = 'fixed inset-0 bg-black/70 z-[200] flex items-start justify-center pt-24';
-            palette.innerHTML = `<div class="glass w-full max-w-lg rounded-3xl p-4 border border-zinc-700"><div class="flex items-center bg-zinc-900 rounded-2xl px-4 py-3 mb-3"><i class="fa-solid fa-search text-zinc-400 mr-3"></i><input type="text" id="cmd-input" placeholder="Type command... (gateway, focus 10, astral, export)" class="flex-1 bg-transparent outline-none text-sm" autofocus></div><div class="text-xs text-zinc-500 px-2">Gateway, Focus 10–21, Astral, Lucid, Export, Settings</div></div>`;
+            palette.innerHTML = `<div class="glass w-full max-w-lg rounded-3xl p-4 border border-zinc-700"><div class="flex items-center bg-zinc-900 rounded-2xl px-4 py-3 mb-3"><i class="fa-solid fa-search text-zinc-400 mr-3"></i><input type="text" id="cmd-input" placeholder="Type command... (focus 15, focus 21, astral, monroe)" class="flex-1 bg-transparent outline-none text-sm" autofocus></div><div class="text-xs text-zinc-500 px-2">Focus 10–21, Astral, Lucid, Monroe, Export, Settings</div></div>`;
             document.body.appendChild(palette);
             const input = palette.querySelector('#cmd-input');
             input.focus();
@@ -790,8 +905,10 @@
                 if (e.key === 'Enter') {
                     const val = input.value.toLowerCase().trim();
                     palette.remove();
-                    if (val.includes('focus 10') || val.includes('gateway')) startGatewayProtocol(1);
+                    if (val.includes('focus 10')) startGatewayProtocol(1);
                     else if (val.includes('focus 12')) startGatewayProtocol(2);
+                    else if (val.includes('focus 15')) startGatewayProtocol(6);
+                    else if (val.includes('focus 21')) startGatewayProtocol(7);
                     else if (val.includes('astral')) startGatewayProtocol(3);
                     else if (val.includes('lucid')) startGatewayProtocol(4);
                     else if (val.includes('monroe')) startGatewayProtocol(5);
@@ -855,7 +972,7 @@
             }, 120);
 
             updateAnalytics();
-            console.log('%c[Above Black v0.9.4] Gateway Protocols + PWA fully integrated.', 'color:#3f3f46');
+            console.log('%c[Above Black v0.9.5] Focus 15 + Focus 21 + Multi-band Hemi-Sync + Energy Body + Guided Text + Resources added.', 'color:#3f3f46');
         }
 
         window.onload = initEverything;
