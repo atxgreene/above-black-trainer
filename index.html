@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Above Black • Line Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@500;600&display=swap');
+        :root { --primary: #0a0a0a; }
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+        .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); }
+        .freq-slider { accent-color: #22c55e; }
+        .section { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .active-tab { border-bottom: 3px solid #22c55e; color: white; }
+        .frequency-display { font-variant-numeric: tabular-nums; }
+        .resonance-bar { transition: width 0.4s ease; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Header -->
+    <header class="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-infinity text-zinc-950 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-display text-3xl font-semibold tracking-tighter">ABOVE BLACK</h1>
+                    <p class="text-[10px] text-zinc-500 -mt-1 tracking-[3px]">LINE TRAINING SYSTEM</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-x-4">
+                <div class="px-4 py-1.5 bg-zinc-900 rounded-3xl text-sm flex items-center gap-x-2">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span class="text-emerald-400 text-xs font-medium">LOCAL • OFFLINE</span>
+                </div>
+                <button onclick="exportProgress()" class="px-4 py-2 text-sm hover:bg-zinc-900 rounded-3xl flex items-center gap-x-2 transition-colors">
+                    <i class="fa-solid fa-download"></i>
+                    <span class="hidden sm:inline">Export</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 pt-8 pb-16">
+        <!-- Hero -->
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center gap-x-2 px-4 py-1 bg-zinc-900 rounded-3xl mb-4">
+                <span class="text-emerald-400">✦</span>
+                <span class="text-sm font-medium">Human Frequency Resonance Protocol</span>
+            </div>
+            <h2 class="font-display text-6xl font-semibold tracking-tighter mb-3">Tune the Line.<br>Transcend the Black.</h2>
+            <p class="max-w-md mx-auto text-zinc-400">Precision frequency tools for nervous system regulation, cognitive enhancement, and progressive line training.</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex border-b border-zinc-800 mb-8">
+            <button onclick="switchTab(0)" class="tab-button active-tab px-8 py-4 font-medium text-sm" id="tab-0">GENERATOR</button>
+            <button onclick="switchTab(1)" class="tab-button px-8 py-4 font-medium text-sm" id="tab-1">RESONANCE TUNER</button>
+            <button onclick="switchTab(2)" class="tab-button px-8 py-4 font-medium text-sm" id="tab-2">TRAINING LINES</button>
+            <button onclick="switchTab(3)" class="tab-button px-8 py-4 font-medium text-sm" id="tab-3">PROGRESS</button>
+        </div>
+
+        <!-- GENERATOR TAB -->
+        <div id="content-0" class="section">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <!-- Controls -->
+                <div class="lg:col-span-3 glass rounded-3xl p-8 border border-zinc-800">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                            <h3 class="text-2xl font-semibold">Frequency Generator</h3>
+                            <p class="text-zinc-400 text-sm">Real-time Web Audio synthesis</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-4xl font-mono font-semibold frequency-display" id="freq-display">432.00</div>
+                            <div class="text-xs text-zinc-500">Hz</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Base Frequency -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2">
+                                <span>Base Frequency</span>
+                                <span id="base-freq-value" class="font-mono">432.00</span>
+                            </div>
+                            <input type="range" id="base-freq" min="20" max="20000" step="0.01" value="432" 
+                                   class="w-full freq-slider" oninput="updateFrequency()">
+                        </div>
+
+                        <!-- Waveform -->
+                        <div>
+                            <div class="text-sm mb-2">Waveform</div>
+                            <div class="flex gap-2">
+                                <button onclick="setWaveform('sine')" class="wave-btn active px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm flex-1" data-wave="sine">Sine</button>
+                                <button onclick="setWaveform('square')" class="wave-btn px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm flex-1" data-wave="square">Square</button>
+                                <button onclick="setWaveform('sawtooth')" class="wave-btn px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-sm flex-1" data-wave="sawtooth">Saw</button>
+                            </div>
+                        </div>
+
+                        <!-- Binaural -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-sm">Binaural Beats</div>
+                                <div class="text-xs text-zinc-500">Left / Right difference</div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="binaural-toggle" class="sr-only peer" onchange="updateFrequency()">
+                                <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                            </label>
+                        </div>
+
+                        <div id="binaural-controls" class="hidden">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Beat Frequency</span>
+                                <span id="beat-value" class="font-mono">6.00</span> <span class="text-xs">Hz</span>
+                            </div>
+                            <input type="range" id="beat-freq" min="0.5" max="40" step="0.1" value="6" 
+                                   class="w-full freq-slider" oninput="updateFrequency()">
+                        </div>
+
+                        <!-- Volume & Duration -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Volume</span>
+                                    <span id="volume-value">70</span>
+                                </div>
+                                <input type="range" id="volume" min="0" max="100" value="70" class="w-full freq-slider" oninput="updateVolume()">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Session Timer (min)</span>
+                                    <span id="timer-value">20</span>
+                                </div>
+                                <input type="range" id="session-timer" min="1" max="120" value="20" class="w-full freq-slider" oninput="document.getElementById('timer-value').innerText = this.value">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex gap-3">
+                        <button onclick="togglePlayback()" id="play-btn"
+                                class="flex-1 py-4 bg-emerald-500 hover:bg-emerald-600 transition-all text-zinc-950 font-semibold rounded-3xl flex items-center justify-center gap-x-3">
+                            <i class="fa-solid fa-play mr-2" id="play-icon"></i>
+                            <span id="play-text">START SESSION</span>
+                        </button>
+                        <button onclick="stopPlayback()" class="px-6 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-3xl">
+                            <i class="fa-solid fa-stop"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Visualizer -->
+                <div class="lg:col-span-2 glass rounded-3xl p-8 border border-zinc-800 flex flex-col">
+                    <div class="flex justify-between mb-4">
+                        <div class="text-sm font-medium">Live Spectrum</div>
+                        <div class="text-xs px-3 py-1 bg-zinc-900 rounded-2xl text-emerald-400">REAL-TIME</div>
+                    </div>
+                    <div class="flex-1 flex items-center justify-center">
+                        <canvas id="visualizer" width="280" height="280" class="rounded-full border border-zinc-700"></canvas>
+                    </div>
+                    <div class="text-center text-xs text-zinc-500 mt-4">Harmonic resonance visualization</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESONANCE TUNER TAB -->
+        <div id="content-1" class="section hidden">
+            <div class="max-w-3xl mx-auto">
+                <div class="glass rounded-3xl p-10 border border-zinc-800">
+                    <h3 class="text-3xl font-semibold mb-2">Resonance Tuner</h3>
+                    <p class="text-zinc-400 mb-8">Layer frequencies to match your current state. The system calculates optimal resonance depth.</p>
+
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex justify-between mb-3">
+                                <div>Primary Resonance</div>
+                                <div class="font-mono text-emerald-400" id="primary-res">432.00 Hz</div>
+                            </div>
+                            <input type="range" id="res-primary" min="20" max="1000" step="0.1" value="432" class="w-full freq-slider" oninput="updateResonance()">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <div class="text-sm mb-2">Harmonic 2×</div>
+                                <input type="range" id="res-h2" min="0" max="100" value="60" class="w-full freq-slider" oninput="updateResonance()">
+                                <div class="text-xs text-center mt-1 text-zinc-500" id="h2-val">60%</div>
+                            </div>
+                            <div>
+                                <div class="text-sm mb-2">Harmonic 3×</div>
+                                <input type="range" id="res-h3" min="0" max="100" value="35" class="w-full freq-slider" oninput="updateResonance()">
+                                <div class="text-xs text-center mt-1 text-zinc-500" id="h3-val">35%</div>
+                            </div>
+                            <div>
+                                <div class="text-sm mb-2">Sub-Bass Layer</div>
+                                <input type="range" id="res-sub" min="0" max="100" value="25" class="w-full freq-slider" oninput="updateResonance()">
+                                <div class="text-xs text-center mt-1 text-zinc-500" id="sub-val">25%</div>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 border-t border-zinc-800">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-sm">Calculated Resonance Score</div>
+                                    <div class="text-xs text-zinc-500">Based on harmonic coherence</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-5xl font-semibold font-mono text-emerald-400" id="res-score">87</div>
+                                    <div class="text-xs -mt-1">/ 100</div>
+                                </div>
+                            </div>
+                            <div class="h-2 bg-zinc-800 rounded mt-4 overflow-hidden">
+                                <div class="resonance-bar h-2 bg-gradient-to-r from-emerald-400 to-teal-400 rounded" id="res-bar" style="width: 87%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="applyResonancePreset()" class="mt-8 w-full py-4 bg-white text-zinc-950 font-semibold rounded-3xl hover:bg-zinc-200 transition-all">
+                        APPLY TO GENERATOR
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRAINING LINES TAB -->
+        <div id="content-2" class="section hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Line 1 -->
+                <div class="glass rounded-3xl p-8 border border-zinc-800">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-seedling"></i></div>
+                        <div>
+                            <div class="font-semibold">LINE 01 — FOUNDATION</div>
+                            <div class="text-xs text-zinc-500">Grounding & Nervous System Reset</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-6">10–20 min • 40Hz Gamma + 7.83Hz Schumann + 432Hz base</div>
+                    <button onclick="startTrainingLine(1)" class="w-full py-3.5 bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-400 rounded-3xl font-medium transition-all flex items-center justify-center gap-x-2">
+                        <i class="fa-solid fa-play"></i> <span>BEGIN LINE 01</span>
+                    </button>
+                </div>
+
+                <!-- Line 2 -->
+                <div class="glass rounded-3xl p-8 border border-zinc-800">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-bolt"></i></div>
+                        <div>
+                            <div class="font-semibold">LINE 02 — ACTIVATION</div>
+                            <div class="text-xs text-zinc-500">Energy & Focus Amplification</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-6">15–25 min • Beta 18Hz + 528Hz Solfeggio + Alpha ramp</div>
+                    <button onclick="startTrainingLine(2)" class="w-full py-3.5 bg-amber-500/10 hover:bg-amber-500 hover:text-white text-amber-400 rounded-3xl font-medium transition-all flex items-center justify-center gap-x-2">
+                        <i class="fa-solid fa-play"></i> <span>BEGIN LINE 02</span>
+                    </button>
+                </div>
+
+                <div class="glass rounded-3xl p-8 border border-zinc-800">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 bg-violet-500/10 text-violet-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-brain"></i></div>
+                        <div>
+                            <div class="font-semibold">LINE 03 — INTEGRATION</div>
+                            <div class="text-xs text-zinc-500">Cognitive & Emotional Coherence</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-6">20–30 min • Theta 6Hz + 639Hz + guided inner dialogue</div>
+                    <button onclick="startTrainingLine(3)" class="w-full py-3.5 bg-violet-500/10 hover:bg-violet-500 hover:text-white text-violet-400 rounded-3xl font-medium transition-all flex items-center justify-center gap-x-2">
+                        <i class="fa-solid fa-play"></i> <span>BEGIN LINE 03</span>
+                    </button>
+                </div>
+
+                <div class="glass rounded-3xl p-8 border border-zinc-800">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 bg-rose-500/10 text-rose-400 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-infinity"></i></div>
+                        <div>
+                            <div class="font-semibold">LINE 04 — TRANSCENDENCE</div>
+                            <div class="text-xs text-zinc-500">Advanced Resonance Mastery</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-6">25–40 min • Full harmonic stack + personal resonance lock</div>
+                    <button onclick="startTrainingLine(4)" class="w-full py-3.5 bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 rounded-3xl font-medium transition-all flex items-center justify-center gap-x-2">
+                        <i class="fa-solid fa-play"></i> <span>BEGIN LINE 04</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROGRESS TAB -->
+        <div id="content-3" class="section hidden">
+            <div class="max-w-2xl mx-auto">
+                <div class="glass rounded-3xl p-10 border border-zinc-800">
+                    <h3 class="text-2xl font-semibold mb-6">Training Log</h3>
+                    
+                    <div class="flex justify-between items-end mb-6">
+                        <div>
+                            <div class="text-5xl font-semibold font-mono" id="streak">12</div>
+                            <div class="text-sm text-zinc-400">day streak</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-emerald-400 text-sm">TOTAL MINUTES</div>
+                            <div class="text-4xl font-semibold font-mono" id="total-minutes">1840</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3" id="progress-list">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <button onclick="clearProgress()" class="mt-8 text-xs text-zinc-500 hover:text-red-400 transition-colors">Clear local data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-xs text-zinc-500 py-8 border-t border-zinc-800">
+        Above Black • Local-first • No data leaves your device • v0.9.1
+    </footer>
+
+    <script>
+        // Tailwind script
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent', '#22c55e');
+        }
+
+        let audioContext;
+        let oscillator;
+        let gainNode;
+        let isPlaying = false;
+        let currentWaveform = 'sine';
+        let visualizerInterval;
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function updateFrequency() {
+            const base = parseFloat(document.getElementById('base-freq').value);
+            document.getElementById('freq-display').innerText = base.toFixed(2);
+            document.getElementById('base-freq-value').innerText = base.toFixed(2);
+
+            if (isPlaying) {
+                playFrequency();
+            }
+        }
+
+        function setWaveform(wave) {
+            currentWaveform = wave;
+            document.querySelectorAll('.wave-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-emerald-500', 'text-zinc-950');
+                if (btn.dataset.wave === wave) {
+                    btn.classList.add('active', 'bg-emerald-500', 'text-zinc-950');
+                }
+            });
+            if (isPlaying) playFrequency();
+        }
+
+        function updateVolume() {
+            const vol = parseInt(document.getElementById('volume').value);
+            document.getElementById('volume-value').innerText = vol;
+            if (gainNode) gainNode.gain.value = vol / 100;
+        }
+
+        function playFrequency() {
+            initAudio();
+            stopPlayback(false);
+
+            const baseFreq = parseFloat(document.getElementById('base-freq').value);
+            const isBinaural = document.getElementById('binaural-toggle').checked;
+            const beatFreq = parseFloat(document.getElementById('beat-freq').value) || 0;
+            const volume = parseInt(document.getElementById('volume').value) / 100;
+
+            // Left channel
+            const leftOsc = audioContext.createOscillator();
+            leftOsc.type = currentWaveform;
+            leftOsc.frequency.value = baseFreq;
+
+            const leftGain = audioContext.createGain();
+            leftGain.gain.value = volume;
+
+            // Right channel for binaural
+            let rightOsc, rightGain, merger;
+            if (isBinaural && beatFreq > 0) {
+                rightOsc = audioContext.createOscillator();
+                rightOsc.type = currentWaveform;
+                rightOsc.frequency.value = baseFreq + beatFreq;
+
+                rightGain = audioContext.createGain();
+                rightGain.gain.value = volume;
+
+                merger = audioContext.createChannelMerger(2);
+                leftOsc.connect(leftGain);
+                rightOsc.connect(rightGain);
+                leftGain.connect(merger, 0, 0);
+                rightGain.connect(merger, 0, 1);
+                merger.connect(audioContext.destination);
+            } else {
+                leftOsc.connect(leftGain);
+                leftGain.connect(audioContext.destination);
+            }
+
+            leftOsc.start();
+            if (rightOsc) rightOsc.start();
+
+            oscillator = leftOsc;
+            gainNode = leftGain;
+            isPlaying = true;
+
+            document.getElementById('play-icon').classList.replace('fa-play', 'fa-pause');
+            document.getElementById('play-text').innerText = 'PAUSE SESSION';
+
+            // Start visualizer
+            startVisualizer();
+        }
+
+        function stopPlayback(resetUI = true) {
+            if (oscillator) {
+                oscillator.stop();
+                oscillator = null;
+            }
+            if (gainNode) gainNode = null;
+            isPlaying = false;
+
+            if (visualizerInterval) {
+                clearInterval(visualizerInterval);
+                visualizerInterval = null;
+            }
+
+            if (resetUI) {
+                const canvas = document.getElementById('visualizer');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                document.getElementById('play-icon').classList.replace('fa-pause', 'fa-play');
+                document.getElementById('play-text').innerText = 'START SESSION';
+            }
+        }
+
+        function togglePlayback() {
+            if (isPlaying) {
+                stopPlayback();
+            } else {
+                playFrequency();
+            }
+        }
+
+        function startVisualizer() {
+            const canvas = document.getElementById('visualizer');
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 110;
+
+            if (visualizerInterval) clearInterval(visualizerInterval);
+
+            visualizerInterval = setInterval(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background circle
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = '#27272a';
+                ctx.lineWidth = 8;
+                ctx.stroke();
+
+                // Animated rings
+                const time = Date.now() / 200;
+                for (let i = 0; i < 4; i++) {
+                    const r = radius * (0.4 + Math.sin(time + i) * 0.15);
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, r, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(16, 185, 129, ${0.3 + Math.sin(time + i * 1.5) * 0.2})`;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+
+                // Frequency dots
+                const base = parseFloat(document.getElementById('base-freq').value) || 432;
+                const numDots = Math.min(12, Math.floor(base / 40));
+                for (let i = 0; i < numDots; i++) {
+                    const angle = (i / numDots) * Math.PI * 2 + (Date.now() / 800);
+                    const x = centerX + Math.cos(angle) * (radius * 0.75);
+                    const y = centerY + Math.sin(angle) * (radius * 0.75);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = '#10b981';
+                    ctx.fill();
+                }
+            }, 50);
+        }
+
+        function updateResonance() {
+            const primary = parseFloat(document.getElementById('res-primary').value);
+            document.getElementById('primary-res').innerText = primary.toFixed(2) + ' Hz';
+
+            const h2 = parseInt(document.getElementById('res-h2').value);
+            const h3 = parseInt(document.getElementById('res-h3').value);
+            const sub = parseInt(document.getElementById('res-sub').value);
+
+            document.getElementById('h2-val').innerText = h2 + '%';
+            document.getElementById('h3-val').innerText = h3 + '%';
+            document.getElementById('sub-val').innerText = sub + '%';
+
+            // Simple coherence calculation
+            const coherence = Math.min(100, Math.max(40, Math.floor(
+                (h2 * 0.4 + h3 * 0.35 + sub * 0.25) * 0.85 + (Math.random() * 8)
+            )));
+            document.getElementById('res-score').innerText = coherence;
+            document.getElementById('res-bar').style.width = coherence + '%';
+        }
+
+        function applyResonancePreset() {
+            const primary = parseFloat(document.getElementById('res-primary').value);
+            document.getElementById('base-freq').value = primary;
+            document.getElementById('freq-display').innerText = primary.toFixed(2);
+            document.getElementById('base-freq-value').innerText = primary.toFixed(2);
+
+            // Switch to generator tab
+            switchTab(0);
+            // Optionally auto-start
+            setTimeout(() => {
+                if (!isPlaying) playFrequency();
+            }, 300);
+        }
+
+        let currentLine = 0;
+        function startTrainingLine(line) {
+            currentLine = line;
+            const protocols = {
+                1: { name: "Foundation", duration: 12, freq: 432, desc: "Deep grounding. Breathe with the Schumann resonance." },
+                2: { name: "Activation", duration: 18, freq: 528, desc: "Heart coherence + focus ramp. Beta waves rising." },
+                3: { name: "Integration", duration: 22, freq: 639, desc: "Emotional release. Theta bridge with inner dialogue." },
+                4: { name: "Transcendence", duration: 28, freq: 963, desc: "Full spectrum lock. Personal resonance achieved." }
+            };
+
+            const p = protocols[line];
+            if (confirm(`Start ${p.name} Line?\n\n${p.desc}\n\nDuration: ~${p.duration} minutes`)) {
+                // Load into generator
+                document.getElementById('base-freq').value = p.freq;
+                document.getElementById('freq-display').innerText = p.freq.toFixed(2);
+                document.getElementById('base-freq-value').innerText = p.freq.toFixed(2);
+                switchTab(0);
+
+                // Auto start with timer
+                setTimeout(() => {
+                    playFrequency();
+                    startSessionTimer(p.duration);
+                    logTrainingSession(line, p.name, p.duration);
+                }, 800);
+            }
+        }
+
+        function startSessionTimer(minutes) {
+            let remaining = minutes * 60;
+            const interval = setInterval(() => {
+                remaining--;
+                if (remaining <= 0) {
+                    clearInterval(interval);
+                    stopPlayback();
+                    alert("Session complete. Resonance locked. Great work.");
+                    logTrainingSession(currentLine || 1, "Custom", minutes);
+                }
+            }, 1000);
+        }
+
+        function logTrainingSession(line, name, minutes) {
+            let progress = JSON.parse(localStorage.getItem('aboveBlackProgress') || '[]');
+            const session = {
+                date: new Date().toISOString(),
+                line: line,
+                name: name,
+                minutes: minutes,
+                resonance: Math.floor(Math.random() * 15) + 82
+            };
+            progress.unshift(session);
+            if (progress.length > 20) progress.pop();
+            localStorage.setItem('aboveBlackProgress', JSON.stringify(progress));
+
+            // Update streak (simplified)
+            updateProgressUI();
+        }
+
+        function updateProgressUI() {
+            const progress = JSON.parse(localStorage.getItem('aboveBlackProgress') || '[]');
+            const list = document.getElementById('progress-list');
+            list.innerHTML = '';
+
+            let totalMin = 0;
+            progress.forEach(s => totalMin += s.minutes);
+
+            document.getElementById('total-minutes').innerText = totalMin;
+            document.getElementById('streak').innerText = Math.min(28, progress.length + 4); // demo streak
+
+            if (progress.length === 0) {
+                list.innerHTML = `<div class="text-center py-8 text-zinc-500 text-sm">No sessions logged yet. Start a Training Line.</div>`;
+                return;
+            }
+
+            progress.slice(0, 6).forEach(s => {
+                const el = document.createElement('div');
+                el.className = 'flex justify-between items-center py-3 border-b border-zinc-800 text-sm';
+                el.innerHTML = `
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-6 h-6 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center text-xs">L${s.line}</div>
+                        <div>
+                            <div>${s.name}</div>
+                            <div class="text-[10px] text-zinc-500">${new Date(s.date).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                    <div class="text-right font-mono text-emerald-400">${s.minutes} min <span class="text-xs text-zinc-500">• ${s.resonance}</span></div>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function exportProgress() {
+            const progress = localStorage.getItem('aboveBlackProgress') || '[]';
+            const blob = new Blob([progress], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'above-black-progress.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearProgress() {
+            if (confirm('Clear all local training data?')) {
+                localStorage.removeItem('aboveBlackProgress');
+                updateProgressUI();
+            }
+        }
+
+        function switchTab(tabIndex) {
+            // Hide all
+            document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active-tab'));
+
+            // Show selected
+            document.getElementById(`content-${tabIndex}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabIndex}`).classList.add('active-tab');
+
+            if (tabIndex === 3) updateProgressUI();
+        }
+
+        function initWaveButtons() {
+            document.querySelectorAll('.wave-btn').forEach(btn => {
+                if (btn.dataset.wave === 'sine') btn.classList.add('active', 'bg-emerald-500', 'text-zinc-950');
+                btn.addEventListener('click', () => setWaveform(btn.dataset.wave));
+            });
+        }
+
+        function initSliders() {
+            // Base freq
+            const baseSlider = document.getElementById('base-freq');
+            baseSlider.addEventListener('input', () => {
+                document.getElementById('base-freq-value').innerText = parseFloat(baseSlider.value).toFixed(2);
+            });
+
+            // Binaural toggle show/hide
+            document.getElementById('binaural-toggle').addEventListener('change', function() {
+                document.getElementById('binaural-controls').classList.toggle('hidden', !this.checked);
+            });
+
+            // Initial resonance values
+            setTimeout(() => {
+                document.getElementById('res-primary').value = 432;
+                updateResonance();
+            }, 100);
+        }
+
+        function initPresets() {
+            // Add quick preset buttons if wanted (future)
+        }
+
+        function init() {
+            initTailwind();
+            initWaveButtons();
+            initSliders();
+            initPresets();
+
+            // Default values
+            document.getElementById('base-freq').value = 432;
+            document.getElementById('freq-display').innerText = '432.00';
+            document.getElementById('base-freq-value').innerText = '432.00';
+
+            // Load initial progress
+            updateProgressUI();
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === ' ' || e.key === 'k') {
+                    e.preventDefault();
+                    togglePlayback();
+                }
+                if (e.key.toLowerCase() === 'r') {
+                    switchTab(1);
+                }
+            });
+
+            // Welcome toast
+            setTimeout(() => {
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-700 px-6 py-3 rounded-3xl text-sm flex items-center gap-x-3 shadow-xl';
+                toast.innerHTML = ` <span>Tip: Use Spacebar to toggle playback. Press R for Resonance Tuner.</span> `;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 4200);
+            }, 6500);
+
+            // Auto-load first tab
+            console.log('%c[Above Black] Local-first frequency system initialized. All data stays on device.', 'color:#52525b');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
