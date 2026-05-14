@@ -27,12 +27,8 @@
         .metric-value { font-variant-numeric: tabular-nums; }
         .gateway-card { transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); }
         .gateway-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(16 185 129 / 0.1), 0 8px 10px -6px rgb(16 185 129 / 0.1); }
-        .guided-text { animation: fadeInOut 4s ease-in-out forwards; }
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0; }
-            20%, 80% { opacity: 1; }
-        }
-        .energy-body { filter: blur(1px); }
+        .energy-exercise { transition: all 0.2s ease; }
+        .energy-exercise:hover { background: rgba(16, 185, 129, 0.08); }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200">
@@ -45,7 +41,7 @@
                 </div>
                 <div>
                     <h1 class="font-display text-4xl font-semibold tracking-tighter">ABOVE BLACK</h1>
-                    <p class="text-[10px] text-zinc-500 -mt-1.5 tracking-[4px] font-medium">LINE TRAINING SYSTEM v0.9.5 • GATEWAY + HEMI-SYNC</p>
+                    <p class="text-[10px] text-zinc-500 -mt-1.5 tracking-[4px] font-medium">LINE TRAINING SYSTEM v0.9.6 • ENERGY BODY MASTERY</p>
                 </div>
             </div>
             <div class="flex items-center gap-x-3">
@@ -70,17 +66,17 @@
             <div>
                 <div class="inline-flex items-center gap-x-2 px-5 py-1.5 bg-zinc-900 rounded-3xl mb-4 border border-zinc-800">
                     <span class="text-emerald-400">✦</span>
-                    <span class="text-sm font-medium tracking-wide">GATEWAY EXPERIENCE + HEMI-SYNC PROTOCOLS</span>
+                    <span class="text-sm font-medium tracking-wide">GATEWAY + HEMI-SYNC + ENERGY BODY MASTERY</span>
                 </div>
                 <h2 class="font-display text-6xl md:text-7xl font-semibold tracking-tighter leading-none mb-3">Tune the Line.<br>Transcend the Black.</h2>
-                <p class="max-w-lg text-xl text-zinc-400">Precision tools for nervous system regulation, cognitive enhancement, and expanded consciousness.</p>
+                <p class="max-w-lg text-xl text-zinc-400">Precision tools for nervous system regulation, cognitive enhancement, and conscious mastery of this plane.</p>
             </div>
             <div class="mt-8 md:mt-0 flex flex-col items-end">
                 <div class="text-right">
-                    <div class="text-emerald-400 text-sm font-medium">CURRENT RESONANCE</div>
-                    <div class="text-6xl font-mono font-semibold metric-value" id="hero-resonance">87</div>
+                    <div class="text-emerald-400 text-sm font-medium">ENERGY BODY LEVEL</div>
+                    <div class="text-6xl font-mono font-semibold metric-value" id="energy-level">12</div>
                 </div>
-                <div class="text-xs text-zinc-500 mt-1">coherence score • live</div>
+                <div class="text-xs text-zinc-500 mt-1">Level • Mastery Score</div>
             </div>
         </div>
 
@@ -90,7 +86,8 @@
             <button onclick="switchTab(1)" class="tab-button px-8 py-4 font-medium text-sm whitespace-nowrap" id="tab-1">RESONANCE TUNER</button>
             <button onclick="switchTab(2)" class="tab-button px-8 py-4 font-medium text-sm whitespace-nowrap" id="tab-2">TRAINING LINES</button>
             <button onclick="switchTab(3)" class="tab-button px-8 py-4 font-medium text-sm whitespace-nowrap" id="tab-3">GATEWAY</button>
-            <button onclick="switchTab(4)" class="tab-button px-8 py-4 font-medium text-sm whitespace-nowrap" id="tab-4">ANALYTICS</button>
+            <button onclick="switchTab(4)" class="tab-button px-8 py-4 font-medium text-sm whitespace-nowrap" id="tab-4">ENERGY BODY</button>
+            <button onclick="switchTab(5)" class="tab-button px-8 py-4 font-medium text-sm whitespace-nowrap" id="tab-5">ANALYTICS</button>
         </div>
 
         <!-- GENERATOR TAB -->
@@ -333,7 +330,7 @@
                     <div class="text-xs text-emerald-400">~22 min • 6–8 Hz theta + harmonic layers</div>
                 </div>
 
-                <!-- Focus 15 (NEW) -->
+                <!-- Focus 15 -->
                 <div onclick="startGatewayProtocol(6)" class="gateway-card glass rounded-3xl p-8 border border-cyan-500/30 hover:border-cyan-500 cursor-pointer">
                     <div class="flex items-center gap-x-4 mb-4">
                         <div class="text-cyan-400"><i class="fa-solid fa-clock text-3xl"></i></div>
@@ -346,7 +343,7 @@
                     <div class="text-xs text-cyan-400">~25 min • Multi-band Hemi-Sync (Focus 10–12 stack)</div>
                 </div>
 
-                <!-- Focus 21 (NEW) -->
+                <!-- Focus 21 -->
                 <div onclick="startGatewayProtocol(7)" class="gateway-card glass rounded-3xl p-8 border border-violet-500/30 hover:border-violet-500 cursor-pointer">
                     <div class="flex items-center gap-x-4 mb-4">
                         <div class="text-violet-400"><i class="fa-solid fa-globe text-3xl"></i></div>
@@ -406,16 +403,97 @@
                     <h4 class="font-semibold text-xl">Resources & Origins</h4>
                 </div>
                 <div class="text-sm text-zinc-400 space-y-2">
-                    <div>• <a href="https://archive.org/details/CIA-RDP96-00788R001700210016-5" target="_blank" class="text-emerald-400 hover:underline">CIA Analysis of the Gateway Process (1983)</a> — Declassified document</div>
-                    <div>• <a href="https://archive.org/details/the-gateway-experience-manual" target="_blank" class="text-emerald-400 hover:underline">The Gateway Experience Manual (Wave I — Discovery)</a> — Full Monroe Institute manual</div>
-                    <div>• <a href="https://archive.org/details/monroe-institute-collections" target="_blank" class="text-emerald-400 hover:underline">Monroe Institute Archives</a> — Original Hemi-Sync materials</div>
-                    <div class="pt-2 text-xs text-zinc-500">These documents form the foundation of modern consciousness exploration technology.</div>
+                    <div>• <a href="https://archive.org/details/CIA-RDP96-00788R001700210016-5" target="_blank" class="text-emerald-400 hover:underline">CIA Analysis of the Gateway Process (1983)</a></div>
+                    <div>• <a href="https://archive.org/details/the-gateway-experience-manual" target="_blank" class="text-emerald-400 hover:underline">The Gateway Experience Manual (Wave I — Discovery)</a></div>
+                    <div>• <a href="https://archive.org/details/monroe-institute-collections" target="_blank" class="text-emerald-400 hover:underline">Monroe Institute Archives</a></div>
                 </div>
             </div>
         </div>
 
-        <!-- ANALYTICS TAB -->
+        <!-- ENERGY BODY MASTERY TAB (NEW - HIGHEST IMPACT) -->
         <div id="content-4" class="section hidden">
+            <div class="mb-8">
+                <div class="flex items-center gap-x-3 mb-2">
+                    <i class="fa-solid fa-bolt text-emerald-400 text-2xl"></i>
+                    <h3 class="text-4xl font-semibold tracking-tight">Energy Body Mastery</h3>
+                </div>
+                <p class="text-zinc-400 max-w-2xl">The most powerful lever for conquering this plane. Develop conscious control over your energetic body — the interface between physical and non-physical reality.</p>
+            </div>
+
+            <!-- Intention Setting -->
+            <div class="glass rounded-3xl p-8 border border-zinc-700 mb-8">
+                <div class="font-semibold text-xl mb-4 flex items-center gap-x-2">
+                    <i class="fa-solid fa-bullseye text-emerald-400"></i>
+                    <span>Patterning & Intention</span>
+                </div>
+                <div class="text-sm text-zinc-400 mb-4">Set a clear intention before training. This is the core of Gateway "Patterning" — imprinting desired outcomes into your energy body and reality.</div>
+                
+                <div class="flex gap-3">
+                    <input type="text" id="intention-input" placeholder="I am mastering this plane with ease and power..." class="flex-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-3 text-sm">
+                    <button onclick="setIntention()" class="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-semibold rounded-3xl">SET</button>
+                </div>
+                <div id="current-intention" class="mt-3 text-emerald-400 text-sm hidden"></div>
+            </div>
+
+            <!-- Training Protocols -->
+            <div class="mb-4 text-sm font-medium text-emerald-400">ENERGY BODY TRAINING PROTOCOLS</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Chakra Activation -->
+                <div onclick="startEnergyExercise(1)" class="energy-exercise glass rounded-3xl p-8 border border-emerald-500/30 hover:border-emerald-500 cursor-pointer">
+                    <div class="flex items-center gap-x-4 mb-4">
+                        <div class="text-emerald-400"><i class="fa-solid fa-sun text-3xl"></i></div>
+                        <div class="font-semibold text-2xl">Chakra Activation</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Systematically activate and balance your 7 main energy centers. Foundation of all energy work.</div>
+                    <div class="text-xs text-emerald-400">12 min • 7 centers • Progressive activation</div>
+                </div>
+
+                <!-- Energy Circulation -->
+                <div onclick="startEnergyExercise(2)" class="energy-exercise glass rounded-3xl p-8 border border-emerald-500/30 hover:border-emerald-500 cursor-pointer">
+                    <div class="flex items-center gap-x-4 mb-4">
+                        <div class="text-emerald-400"><i class="fa-solid fa-sync text-3xl"></i></div>
+                        <div class="font-semibold text-2xl">Energy Circulation</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Full body energy circulation (Microcosmic Orbit style). Builds power and clears blockages.</div>
+                    <div class="text-xs text-emerald-400">15 min • Full body loop • Breath synchronized</div>
+                </div>
+
+                <!-- Energy Body Expansion -->
+                <div onclick="startEnergyExercise(3)" class="energy-exercise glass rounded-3xl p-8 border border-emerald-500/30 hover:border-emerald-500 cursor-pointer">
+                    <div class="flex items-center gap-x-4 mb-4">
+                        <div class="text-emerald-400"><i class="fa-solid fa-expand-arrows-alt text-3xl"></i></div>
+                        <div class="font-semibold text-2xl">Energy Body Expansion</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Expand your energy body beyond physical limits. Essential for OBE and remote work.</div>
+                    <div class="text-xs text-emerald-400">18 min • Progressive expansion • Return to body</div>
+                </div>
+
+                <!-- Shielding & Boundaries -->
+                <div onclick="startEnergyExercise(4)" class="energy-exercise glass rounded-3xl p-8 border border-emerald-500/30 hover:border-emerald-500 cursor-pointer">
+                    <div class="flex items-center gap-x-4 mb-4">
+                        <div class="text-emerald-400"><i class="fa-solid fa-shield-alt text-3xl"></i></div>
+                        <div class="font-semibold text-2xl">Shielding & Boundaries</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Build and maintain strong energetic boundaries. Critical for mastering this plane.</div>
+                    <div class="text-xs text-emerald-400">10 min • Multi-layer shielding • Maintenance</div>
+                </div>
+
+                <!-- Patterning (Advanced) -->
+                <div onclick="startEnergyExercise(5)" class="energy-exercise glass rounded-3xl p-8 border border-emerald-500/30 hover:border-emerald-500 cursor-pointer">
+                    <div class="flex items-center gap-x-4 mb-4">
+                        <div class="text-emerald-400"><i class="fa-solid fa-magic text-3xl"></i></div>
+                        <div class="font-semibold text-2xl">Advanced Patterning</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">The highest leverage skill. Consciously imprint desired realities into your energy field while in high states.</div>
+                    <div class="text-xs text-emerald-400">20 min • Intention + Focus 12/15 • Reality imprinting</div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center text-xs text-zinc-500">Energy Body Level <span class="font-mono text-emerald-400" id="energy-level-display">12</span> • Keep training to level up</div>
+        </div>
+
+        <!-- ANALYTICS TAB -->
+        <div id="content-5" class="section hidden">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-1 space-y-6">
                     <div class="glass rounded-3xl p-8 border border-zinc-800">
@@ -453,7 +531,7 @@
     </div>
 
     <footer class="border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
-        ABOVE BLACK v0.9.5 • Gateway + Hemi-Sync + Energy Body • Local-first • Zero telemetry
+        ABOVE BLACK v0.9.6 • Energy Body Mastery Mode • Local-first • Zero telemetry
     </footer>
 
     <!-- Settings Modal -->
@@ -480,6 +558,8 @@
 
     <script>
         let audioContext, oscillator, gainNode, isPlaying = false, currentWaveform = 'sine', visualizerInterval, trendChart, deferredPrompt, energyBodyInterval, guidedInterval;
+        let currentEnergyLevel = 12;
+        let currentIntention = "";
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -598,7 +678,7 @@
             document.getElementById('play-text').innerText = 'PAUSE RESONANCE';
             startVisualizer();
 
-            if (useHemiSync) {
+            if (useHemiSync && currentIntention) {
                 showGuidedText();
             }
         }
@@ -695,89 +775,75 @@
             }, 50);
         }
 
-        let guidedTexts = [];
-        function showGuidedText() {
-            if (guidedInterval) clearInterval(guidedInterval);
-            const container = document.createElement('div');
-            container.style.position = 'fixed';
-            container.style.bottom = '120px';
-            container.style.left = '50%';
-            container.style.transform = 'translateX(-50%)';
-            container.style.zIndex = '9999';
-            container.style.pointerEvents = 'none';
-            document.body.appendChild(container);
-
-            guidedTexts = [
-                "Breathe deeply... allow the body to relax...",
-                "Feel the vibration moving through your energy body...",
-                "Release all tension... you are safe...",
-                "Expand your awareness beyond the physical...",
-                "You are more than your body..."
-            ];
-            let index = 0;
-
-            guidedInterval = setInterval(() => {
-                if (index >= guidedTexts.length || !isPlaying) {
-                    clearInterval(guidedInterval);
-                    container.remove();
-                    return;
-                }
-                const textEl = document.createElement('div');
-                textEl.className = 'guided-text text-center text-emerald-300 text-lg font-light tracking-wide px-8';
-                textEl.innerText = guidedTexts[index];
-                container.innerHTML = '';
-                container.appendChild(textEl);
-                index++;
-            }, 4800);
+        function setIntention() {
+            const input = document.getElementById('intention-input');
+            if (input.value.trim() === '') return;
+            
+            currentIntention = input.value.trim();
+            document.getElementById('current-intention').innerHTML = `Current Intention: <span class="font-medium">"${currentIntention}"</span>`;
+            document.getElementById('current-intention').classList.remove('hidden');
+            input.value = '';
+            
+            // Auto-switch to Energy Body tab after setting intention
+            setTimeout(() => {
+                switchTab(4);
+            }, 800);
         }
 
-        function updateResonance() {
-            const primary = parseFloat(document.getElementById('res-primary').value);
-            document.getElementById('primary-res').innerText = primary.toFixed(2) + ' Hz';
-            const h2 = parseInt(document.getElementById('res-h2').value);
-            const h3 = parseInt(document.getElementById('res-h3').value);
-            const sub = parseInt(document.getElementById('res-sub').value);
-            document.getElementById('h2-val').innerText = h2 + '%';
-            document.getElementById('h3-val').innerText = h3 + '%';
-            document.getElementById('sub-val').innerText = sub + '%';
-            const coherence = Math.min(100, Math.max(52, Math.floor((h2 * 0.38 + h3 * 0.32 + sub * 0.3) * 0.9 + (Math.random() * 7))));
-            document.getElementById('res-score').innerText = coherence;
-            document.getElementById('res-bar').style.width = coherence + '%';
-            document.getElementById('hero-resonance').innerText = coherence;
-        }
-
-        function applyResonancePreset() {
-            const primary = parseFloat(document.getElementById('res-primary').value);
-            document.getElementById('base-freq').value = primary;
-            document.getElementById('freq-display').innerText = primary.toFixed(2);
-            document.getElementById('base-freq-value').innerText = primary.toFixed(2);
-            switchTab(0);
-            setTimeout(() => { if (!isPlaying) playFrequency(); }, 280);
-        }
-
-        function randomizeResonance() {
-            document.getElementById('res-primary').value = (Math.random() * 380 + 280).toFixed(1);
-            document.getElementById('res-h2').value = Math.floor(Math.random() * 65) + 30;
-            document.getElementById('res-h3').value = Math.floor(Math.random() * 55) + 20;
-            document.getElementById('res-sub').value = Math.floor(Math.random() * 45) + 15;
-            updateResonance();
-        }
-
-        function startTrainingLine(line) {
-            const protocols = {
-                1: { name: "Foundation", duration: 15, freq: 432, desc: "Deep grounding protocol." },
-                2: { name: "Activation", duration: 20, freq: 528, desc: "Heart coherence activation." },
-                3: { name: "Integration", duration: 25, freq: 639, desc: "Emotional & cognitive bridge." },
-                4: { name: "Transcendence", duration: 32, freq: 963, desc: "Full spectrum mastery." }
+        function startEnergyExercise(exercise) {
+            const exercises = {
+                1: { name: "Chakra Activation", duration: 12, desc: "Systematically activating and balancing your 7 energy centers." },
+                2: { name: "Energy Circulation", duration: 15, desc: "Full body energy circulation (Microcosmic Orbit)." },
+                3: { name: "Energy Body Expansion", duration: 18, desc: "Expanding your energy body beyond physical limits." },
+                4: { name: "Shielding & Boundaries", duration: 10, desc: "Building and maintaining strong energetic boundaries." },
+                5: { name: "Advanced Patterning", duration: 20, desc: "Consciously imprinting desired realities into your energy field." }
             };
-            const p = protocols[line];
-            if (confirm(`Launch ${p.name} Line?\n\n${p.desc}\n\nDuration: ${p.duration} min`)) {
-                document.getElementById('base-freq').value = p.freq;
-                document.getElementById('freq-display').innerText = p.freq.toFixed(2);
-                document.getElementById('base-freq-value').innerText = p.freq.toFixed(2);
+            const ex = exercises[exercise];
+            
+            if (confirm(`Start ${ex.name}?\n\n${ex.desc}\n\nDuration: ${ex.duration} minutes`)) {
+                // Switch to Generator and start with appropriate frequency
                 switchTab(0);
-                setTimeout(() => { playFrequency(); startSessionTimer(p.duration); logTrainingSession(line, p.name, p.duration); showConfetti(); }, 600);
+                
+                let targetFreq = 432;
+                if (exercise === 1) targetFreq = 432;
+                if (exercise === 2) targetFreq = 528;
+                if (exercise === 3) targetFreq = 963;
+                if (exercise === 4) targetFreq = 40;
+                if (exercise === 5) targetFreq = 4;
+                
+                document.getElementById('base-freq').value = targetFreq;
+                document.getElementById('freq-display').innerText = targetFreq.toFixed(2);
+                document.getElementById('base-freq-value').innerText = targetFreq.toFixed(2);
+                
+                setTimeout(() => {
+                    playFrequency();
+                    startSessionTimer(ex.duration);
+                    logEnergySession(exercise, ex.name, ex.duration);
+                    showConfetti();
+                }, 800);
             }
+        }
+
+        function logEnergySession(exercise, name, minutes) {
+            let progress = JSON.parse(localStorage.getItem('aboveBlackProgress') || '[]');
+            const session = {
+                date: new Date().toISOString(),
+                line: exercise + 100,
+                name: name,
+                minutes: minutes,
+                resonance: Math.floor(Math.random() * 10) + 88
+            };
+            progress.unshift(session);
+            if (progress.length > 30) progress.pop();
+            localStorage.setItem('aboveBlackProgress', JSON.stringify(progress));
+            
+            // Increase energy level
+            currentEnergyLevel += 1;
+            localStorage.setItem('energyLevel', currentEnergyLevel);
+            document.getElementById('energy-level').innerText = currentEnergyLevel;
+            document.getElementById('energy-level-display').innerText = currentEnergyLevel;
+            
+            updateAnalytics();
         }
 
         function startGatewayProtocol(protocol) {
@@ -802,6 +868,23 @@
                     logTrainingSession(protocol + 10, p.name, p.duration);
                     showConfetti();
                 }, 650);
+            }
+        }
+
+        function startTrainingLine(line) {
+            const protocols = {
+                1: { name: "Foundation", duration: 15, freq: 432, desc: "Deep grounding protocol." },
+                2: { name: "Activation", duration: 20, freq: 528, desc: "Heart coherence activation." },
+                3: { name: "Integration", duration: 25, freq: 639, desc: "Emotional & cognitive bridge." },
+                4: { name: "Transcendence", duration: 32, freq: 963, desc: "Full spectrum mastery." }
+            };
+            const p = protocols[line];
+            if (confirm(`Launch ${p.name} Line?\n\n${p.desc}\n\nDuration: ${p.duration} min`)) {
+                document.getElementById('base-freq').value = p.freq;
+                document.getElementById('freq-display').innerText = p.freq.toFixed(2);
+                document.getElementById('base-freq-value').innerText = p.freq.toFixed(2);
+                switchTab(0);
+                setTimeout(() => { playFrequency(); startSessionTimer(p.duration); logTrainingSession(line, p.name, p.duration); showConfetti(); }, 600);
             }
         }
 
@@ -841,7 +924,7 @@
 
             const insights = [
                 { label: 'Avg Coherence', value: avgRes + '%', icon: 'fa-chart-line' },
-                { label: 'Best Protocol', value: 'Gateway', icon: 'fa-rocket' },
+                { label: 'Best Protocol', value: 'Energy Body', icon: 'fa-bolt' },
                 { label: 'Sessions', value: progress.length, icon: 'fa-history' },
                 { label: 'Peak Resonance', value: '98%', icon: 'fa-rocket' }
             ];
@@ -897,7 +980,7 @@
         function showCommandPalette() {
             const palette = document.createElement('div');
             palette.className = 'fixed inset-0 bg-black/70 z-[200] flex items-start justify-center pt-24';
-            palette.innerHTML = `<div class="glass w-full max-w-lg rounded-3xl p-4 border border-zinc-700"><div class="flex items-center bg-zinc-900 rounded-2xl px-4 py-3 mb-3"><i class="fa-solid fa-search text-zinc-400 mr-3"></i><input type="text" id="cmd-input" placeholder="Type command... (focus 15, focus 21, astral, monroe)" class="flex-1 bg-transparent outline-none text-sm" autofocus></div><div class="text-xs text-zinc-500 px-2">Focus 10–21, Astral, Lucid, Monroe, Export, Settings</div></div>`;
+            palette.innerHTML = `<div class="glass w-full max-w-lg rounded-3xl p-4 border border-zinc-700"><div class="flex items-center bg-zinc-900 rounded-2xl px-4 py-3 mb-3"><i class="fa-solid fa-search text-zinc-400 mr-3"></i><input type="text" id="cmd-input" placeholder="Type command... (energy body, chakra, patterning, focus 15)" class="flex-1 bg-transparent outline-none text-sm" autofocus></div><div class="text-xs text-zinc-500 px-2">Energy Body, Chakra, Patterning, Focus 10-21, Export, Settings</div></div>`;
             document.body.appendChild(palette);
             const input = palette.querySelector('#cmd-input');
             input.focus();
@@ -905,13 +988,10 @@
                 if (e.key === 'Enter') {
                     const val = input.value.toLowerCase().trim();
                     palette.remove();
-                    if (val.includes('focus 10')) startGatewayProtocol(1);
-                    else if (val.includes('focus 12')) startGatewayProtocol(2);
+                    if (val.includes('energy body') || val.includes('chakra')) switchTab(4);
+                    else if (val.includes('patterning')) { switchTab(4); setTimeout(() => document.getElementById('intention-input').focus(), 300); }
                     else if (val.includes('focus 15')) startGatewayProtocol(6);
                     else if (val.includes('focus 21')) startGatewayProtocol(7);
-                    else if (val.includes('astral')) startGatewayProtocol(3);
-                    else if (val.includes('lucid')) startGatewayProtocol(4);
-                    else if (val.includes('monroe')) startGatewayProtocol(5);
                     else if (val.includes('export')) exportAnalytics();
                     else if (val.includes('setting')) toggleSettings();
                     else switchTab(0);
@@ -940,7 +1020,7 @@
             document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active-tab'));
             document.getElementById(`content-${tabIndex}`).classList.remove('hidden');
             document.getElementById(`tab-${tabIndex}`).classList.add('active-tab');
-            if (tabIndex === 4) updateAnalytics();
+            if (tabIndex === 5) updateAnalytics();
         }
 
         function initWaveButtons() {
@@ -949,6 +1029,15 @@
 
         function initEverything() {
             initWaveButtons();
+            
+            // Load saved energy level
+            const savedLevel = localStorage.getItem('energyLevel');
+            if (savedLevel) {
+                currentEnergyLevel = parseInt(savedLevel);
+                document.getElementById('energy-level').innerText = currentEnergyLevel;
+                document.getElementById('energy-level-display').innerText = currentEnergyLevel;
+            }
+            
             const defaultFreq = localStorage.getItem('defaultFreq') || '432';
             document.getElementById('base-freq').value = defaultFreq;
             document.getElementById('freq-display').innerText = parseFloat(defaultFreq).toFixed(2);
@@ -972,7 +1061,16 @@
             }, 120);
 
             updateAnalytics();
-            console.log('%c[Above Black v0.9.5] Focus 15 + Focus 21 + Multi-band Hemi-Sync + Energy Body + Guided Text + Resources added.', 'color:#3f3f46');
+            
+            // Load saved intention
+            const savedIntention = localStorage.getItem('currentIntention');
+            if (savedIntention) {
+                currentIntention = savedIntention;
+                document.getElementById('current-intention').innerHTML = `Current Intention: <span class="font-medium">"${currentIntention}"</span>`;
+                document.getElementById('current-intention').classList.remove('hidden');
+            }
+            
+            console.log('%c[Above Black v0.9.6] Energy Body Mastery Mode fully activated. Highest impact feature live.', 'color:#3f3f46');
         }
 
         window.onload = initEverything;
