@@ -1,4 +1,4 @@
-const CACHE_NAME = 'above-black-v2';
+const CACHE_NAME = 'above-black-v3';
 const urlsToCache = [
   '/',
   '/index.html',
